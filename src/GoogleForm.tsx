@@ -135,12 +135,12 @@ function GoogleForm() {
     setData(newData);
   };
 
-  const handleCoppyQuestion = (question: string) => {
-    // todo: do not drap drop -> handle change id question
-    const newData = [...data];
-    newData.push(question);
-    setData(newData);
-  };
+  // const handleCoppyQuestion = (question: string) => {
+  //   // todo: do not drap drop -> handle change id question
+  //   const newData = [...data];
+  //   newData.push(question);
+  //   setData(newData);
+  // };
 
   const handleRemoveQuestion = (id: string) => {
     const newData = data.filter((question: any) => question?.id !== id);
@@ -163,19 +163,19 @@ function GoogleForm() {
         <div className="title__block">
           <input
             type="text"
-            placeholder="Thông tin liên hệ"
-            defaultValue="Thông tin liên hệ"
+            placeholder="Contact Info"
+            defaultValue="Contact Info"
             className="title__information"
           />
           <br />
           <input
             type="text"
-            placeholder="Mô tả biểu mẫu"
+            placeholder="Description of the form"
             className="description__information"
           />
         </div>
         <button className="add__question__button" onClick={handleAddQuestion}>
-          Thêm câu hỏi
+          Add question
         </button>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="questions" type={"type"}>
@@ -201,7 +201,7 @@ function GoogleForm() {
                           <div className="question__header">
                             <input
                               type="text"
-                              placeholder="Câu hỏi"
+                              placeholder="Question"
                               className="question__input"
                               onChange={(e: any) =>
                                 handleChangeQuestion(e, index)
@@ -214,13 +214,13 @@ function GoogleForm() {
                               onChange={(e: any) => handleType(e, index)}
                             >
                               <option value=""></option>
-                              <option value="1">Trả lời ngắn</option>
-                              <option value="2">Đoạn</option>
+                              <option value="1">Short answer</option>
+                              <option value="2">Paragraph</option>
                               <option selected value="3">
-                                Trắc nghiệm
+                                Multiple-choice
                               </option>
-                              <option value="4">Hộp kiểm</option>
-                              <option value="5">Menu thả xuống</option>
+                              <option value="4">Checkbox</option>
+                              <option value="5">Drop-down menu</option>
                             </select>
                           </div>
                           <div className="question">
@@ -237,6 +237,7 @@ function GoogleForm() {
                                       <div className="question__group">
                                         <div className="question__field">
                                           <input
+                                            disabled
                                             type="radio"
                                             className="radio__field"
                                             name={`radio__${question?.id}`}
@@ -251,8 +252,8 @@ function GoogleForm() {
                                           />
                                           <input
                                             type="text"
-                                            placeholder="Tuỳ chọn"
-                                            className="option__filed"
+                                            placeholder="Option"
+                                            className="option__radio__filed"
                                             onChange={(e: any) =>
                                               handleChangeOption(
                                                 e,
@@ -302,13 +303,14 @@ function GoogleForm() {
                                     <div className="question__group">
                                       <div className="question__filed">
                                         <input
+                                          disabled
                                           type="checkbox"
                                           name={option?.id}
                                         />
                                         <input
                                           type="text"
-                                          placeholder="Tuỳ chọn"
-                                          className="option__filed"
+                                          placeholder="Option"
+                                          className="option__checkbox__filed"
                                         />
                                       </div>
                                       {question?.options?.length > 1 ? (
@@ -347,7 +349,7 @@ function GoogleForm() {
                                     className="add__option"
                                     onClick={() => handleAddOption(index)}
                                   >
-                                    Thêm tuỳ chọn
+                                    More options
                                   </span>
                                 </>
                               ) : null}
@@ -356,7 +358,7 @@ function GoogleForm() {
                           <div className="question__footer">
                             <p
                               className="coppy__icon"
-                              onClick={() => handleCoppyQuestion(question)}
+                              onClick={handleAddQuestion}
                             ></p>
                             <p
                               className="delete__icon"

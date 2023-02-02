@@ -117,12 +117,30 @@
 .radio__field {
   height: 30px;
 }
-.option__filed {
+.question__field {
+  position: relative;
+}
+.question__filed {
+  margin-top: 10px;
+}
+.option__filed,
+.option__checkbox__filed,
+.option__radio__filed {
   height: 24px;
   border: 0;
   border-bottom: 1px solid #f2f8f8;
   outline: none;
   margin: 0 0 20px 15px;
+}
+.option__checkbox__filed{
+  margin: 0 0 2px 15px;
+}
+.option__radio__filed {
+  position: absolute;
+  top: 10px;
+}
+.add__question__filed {
+  margin-top: 10px;
 }
 .question__group {
   display: flex;
@@ -155,7 +173,7 @@
   justify-content: end;
   align-items: center;
 }
-.add__question__button{
+.add__question__button {
   border: 0;
   background-color: transparent;
   padding: 10px 20px;

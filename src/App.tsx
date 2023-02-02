@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, Fragment } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PieChart from "./PieChart";
+import GoogleForm from "./GoogleForm";
+import BarChart from "./BarChart";
 
-function App() {
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Fragment>
+      <div style={{ "textAlign": "center" }}>
+        <button
+          onClick={() => (window.location.href = "/google-form")}
+          className="button"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          GoogleForm
+        </button>
+        <button
+          onClick={() => (window.location.href = "/pie-chart")}
+          className="button"
+        >
+          PieChart
+        </button>
+        <button
+          onClick={() => (window.location.href = "/bar-chart")}
+          className="button"
+        >
+          BarChart
+        </button>
+      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/google-form" element={<GoogleForm />} />
+          <Route path="/pie-chart" element={<PieChart />} />
+          <Route path="/bar-chart" element={<BarChart />} />
+        </Routes>
+      </BrowserRouter>
+    </Fragment>
   );
-}
-
+};
 export default App;

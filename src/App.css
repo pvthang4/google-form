@@ -116,6 +116,13 @@
 }
 .radio__field {
   height: 30px;
+  position: relative;
+}
+.drap__option__icon {
+  content: url(../public/drap__icon.png);
+  /* transform: rotate(90deg); */
+  display: block;
+  top: 2px;
 }
 .question__field {
   position: relative;
@@ -125,14 +132,26 @@
 }
 .option__filed,
 .option__checkbox__filed,
-.option__radio__filed {
+.option__radio__filed,
+.option__short__filed,
+.option__paragraph__filed {
   height: 24px;
   border: 0;
   border-bottom: 1px solid #f2f8f8;
   outline: none;
   margin: 0 0 20px 15px;
 }
-.option__checkbox__filed{
+.option__short__filed {
+  width: 80%;
+  height: 35px;
+  font-size: 13px;
+}
+.option__paragraph__filed {
+  height: 150px;
+  width: 80%;
+  font-size: 13px;
+}
+.option__checkbox__filed {
   margin: 0 0 2px 15px;
 }
 .option__radio__filed {

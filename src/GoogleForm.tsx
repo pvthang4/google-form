@@ -1,6 +1,7 @@
 import "./App.css";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Formik, Field } from "formik";
+import link from "./drap__option_icon.png";
 
 const questions = [
   {
@@ -8,10 +9,6 @@ const questions = [
     question__title: "",
     question__type: "3",
     options: [
-      {
-        id: Math.random().toString(),
-        option: "",
-      },
       {
         id: Math.random().toString(),
         option: "",
@@ -129,6 +126,29 @@ function GoogleForm() {
             setFieldValue("questions", items);
           };
 
+          const handleOnDragOptionEnd = (
+            result: any,
+            data: any,
+            indexQuestion: number
+          ) => {
+            if (!result.destination) return;
+            const items = Array.from(data);
+            // to
+            const [reorderedItem] = items.splice(result.source.index, 1);
+            // from
+            items.splice(result.destination.index, 0, reorderedItem);
+
+            const newData = [
+              ...values.questions.slice(0, indexQuestion),
+              {
+                ...values.questions[indexQuestion],
+                options: items,
+              },
+              ...values.questions.slice(indexQuestion + 1),
+            ];
+            setFieldValue("questions", newData);
+          };
+
           return (
             <div className="form">
               <div className="title__block">
@@ -212,49 +232,8 @@ function GoogleForm() {
                                       ))}
                                     </select>
                                   </div>
-
                                   <div className="question">
-                                    {question?.question__type === "3" ? (
-                                      question?.options?.map(
-                                        (option: any, indexOption: number) => {
-                                          return (
-                                            <div
-                                              className="radio__type"
-                                              key={option?.id}
-                                            >
-                                              <div className="question__group">
-                                                <div className="question__field">
-                                                  <input
-                                                    disabled
-                                                    type="radio"
-                                                    className="radio__field"
-                                                  />
-                                                  <Field
-                                                    type="text"
-                                                    name={`questions.${index}.options.${indexOption}.option`}
-                                                    placeholder="Option"
-                                                    className="option__radio__filed"
-                                                    onChange={handleChange}
-                                                  />
-                                                </div>
-                                                {question?.options?.length >
-                                                1 ? (
-                                                  <span
-                                                    className="remove__icon"
-                                                    onClick={() =>
-                                                      handleRemoveOption(
-                                                        option?.id,
-                                                        index
-                                                      )
-                                                    }
-                                                  ></span>
-                                                ) : null}
-                                              </div>
-                                            </div>
-                                          );
-                                        }
-                                      )
-                                    ) : question?.question__type === "1" ? (
+                                    {question?.question__type === "1" ? (
                                       <div className="question__filed">
                                         <Field
                                           type="text"
@@ -272,62 +251,288 @@ function GoogleForm() {
                                           onChange={handleChange}
                                         />
                                       </div>
-                                    ) : (
-                                      question?.options?.map(
-                                        (option: any, indexOption: number) => {
-                                          return (
-                                            <div
-                                              className="radio__type"
-                                              key={option?.id}
-                                            >
-                                              <div className="question__group">
-                                                <div className="question__filed">
-                                                  <input
-                                                    disabled
-                                                    type="checkbox"
-                                                    name={option?.id}
-                                                  />
-                                                  <Field
-                                                    type="text"
-                                                    placeholder="Option"
-                                                    className="option__checkbox__filed"
-                                                    name={`questions.${index}.options.${indexOption}.option`}
-                                                    onChange={handleChange}
-                                                  />
-                                                </div>
-                                                {question?.options?.length >
-                                                1 ? (
-                                                  <span
-                                                    className="remove__icon"
-                                                    onClick={() =>
-                                                      handleRemoveOption(
-                                                        option?.id,
-                                                        index
-                                                      )
-                                                    }
-                                                  ></span>
-                                                ) : null}
-                                              </div>
-                                            </div>
-                                          );
+                                    ) : question?.question__type === "3" ? (
+                                      <DragDropContext
+                                        onDragEnd={(result: any) =>
+                                          handleOnDragOptionEnd(
+                                            result,
+                                            question?.options,
+                                            index
+                                          )
                                         }
-                                      )
+                                      >
+                                        <Droppable droppableId="option">
+                                          {(provided) => (
+                                            <div
+                                              className="option"
+                                              {...provided.droppableProps}
+                                              ref={provided.innerRef}
+                                            >
+                                              {question?.options?.map(
+                                                (
+                                                  option: any,
+                                                  indexOption: number
+                                                ) => {
+                                                  return (
+                                                    <Draggable
+                                                      key={option?.id}
+                                                      draggableId={option?.id}
+                                                      index={indexOption}
+                                                    >
+                                                      {(provided) => (
+                                                        <div
+                                                          ref={
+                                                            provided.innerRef
+                                                          }
+                                                          {...provided.draggableProps}
+                                                          {...provided.dragHandleProps}
+                                                          className="radio__type"
+                                                          key={option?.id}
+                                                        >
+                                                          <div className="question__group">
+                                                            <div className="question__field">
+                                                              <img
+                                                                src={link}
+                                                                alt=""
+                                                                className="drap__option_icon"
+                                                              />
+                                                              <input
+                                                                disabled
+                                                                type="radio"
+                                                                className="radio__field"
+                                                              />
+                                                              <Field
+                                                                type="text"
+                                                                name={`questions.${index}.options.${indexOption}.option`}
+                                                                placeholder="Option"
+                                                                className="option__radio__filed"
+                                                                onChange={
+                                                                  handleChange
+                                                                }
+                                                              />
+                                                            </div>
+                                                            {question?.options
+                                                              ?.length > 1 ? (
+                                                              <span
+                                                                className="remove__icon"
+                                                                onClick={() =>
+                                                                  handleRemoveOption(
+                                                                    option?.id,
+                                                                    index
+                                                                  )
+                                                                }
+                                                              ></span>
+                                                            ) : null}
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                    </Draggable>
+                                                  );
+                                                }
+                                              )}
+                                              {provided.placeholder}
+                                            </div>
+                                          )}
+                                        </Droppable>
+                                      </DragDropContext>
+                                    ) : question?.question__type === "4" ? (
+                                      <DragDropContext
+                                        onDragEnd={(result: any) =>
+                                          handleOnDragOptionEnd(
+                                            result,
+                                            question?.options,
+                                            index
+                                          )
+                                        }
+                                      >
+                                        <Droppable droppableId="option">
+                                          {(provided) => (
+                                            <div
+                                              className="option"
+                                              {...provided.droppableProps}
+                                              ref={provided.innerRef}
+                                            >
+                                              {question?.options?.map(
+                                                (
+                                                  option: any,
+                                                  indexOption: number
+                                                ) => {
+                                                  return (
+                                                    <Draggable
+                                                      key={option?.id}
+                                                      draggableId={option?.id}
+                                                      index={indexOption}
+                                                    >
+                                                      {(provided) => (
+                                                        <div
+                                                          ref={
+                                                            provided.innerRef
+                                                          }
+                                                          {...provided.draggableProps}
+                                                          {...provided.dragHandleProps}
+                                                          className="radio__type"
+                                                          key={option?.id}
+                                                        >
+                                                          <div className="question__group">
+                                                            <div className="question__checkbox__field">
+                                                              <img
+                                                                src={link}
+                                                                alt=""
+                                                                className="drap__checkbox__option_icon"
+                                                              />
+                                                              <input
+                                                                disabled
+                                                                type="checkbox"
+                                                                name={
+                                                                  option?.id
+                                                                }
+                                                              />
+                                                              <Field
+                                                                type="text"
+                                                                placeholder="Option"
+                                                                className="option__checkbox__filed"
+                                                                name={`questions.${index}.options.${indexOption}.option`}
+                                                                onChange={
+                                                                  handleChange
+                                                                }
+                                                              />
+                                                            </div>
+                                                            {question?.options
+                                                              ?.length > 1 ? (
+                                                              <span
+                                                                className="remove__icon"
+                                                                onClick={() =>
+                                                                  handleRemoveOption(
+                                                                    option?.id,
+                                                                    index
+                                                                  )
+                                                                }
+                                                              ></span>
+                                                            ) : null}
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                    </Draggable>
+                                                  );
+                                                }
+                                              )}
+                                              {provided.placeholder}
+                                            </div>
+                                          )}
+                                        </Droppable>
+                                      </DragDropContext>
+                                    ) : (
+                                      <DragDropContext
+                                        onDragEnd={(result: any) =>
+                                          handleOnDragOptionEnd(
+                                            result,
+                                            question?.options,
+                                            index
+                                          )
+                                        }
+                                      >
+                                        <Droppable droppableId="option">
+                                          {(provided) => (
+                                            <div
+                                              className="option"
+                                              {...provided.droppableProps}
+                                              ref={provided.innerRef}
+                                            >
+                                              {question?.options?.map(
+                                                (
+                                                  option: any,
+                                                  indexOption: number
+                                                ) => {
+                                                  return (
+                                                    <Draggable
+                                                      key={option?.id}
+                                                      draggableId={option?.id}
+                                                      index={indexOption}
+                                                    >
+                                                      {(provided) => (
+                                                        <div
+                                                          ref={
+                                                            provided.innerRef
+                                                          }
+                                                          {...provided.draggableProps}
+                                                          {...provided.dragHandleProps}
+                                                          className="radio__type"
+                                                          key={option?.id}
+                                                        >
+                                                          <div className="question__group">
+                                                            <div className="question__checkbox__field">
+                                                              <img
+                                                                src={link}
+                                                                alt=""
+                                                                className="drap__select__option_icon"
+                                                              />
+                                                              <span className="select__option__no">
+                                                                {`${
+                                                                  indexOption +
+                                                                  1
+                                                                }.`}
+                                                              </span>
+                                                              <Field
+                                                                type="text"
+                                                                placeholder="Option"
+                                                                className="option__checkbox__filed"
+                                                                name={`questions.${index}.options.${indexOption}.option`}
+                                                                onChange={
+                                                                  handleChange
+                                                                }
+                                                              />
+                                                            </div>
+                                                            {question?.options
+                                                              ?.length > 1 ? (
+                                                              <span
+                                                                className="remove__icon"
+                                                                onClick={() =>
+                                                                  handleRemoveOption(
+                                                                    option?.id,
+                                                                    index
+                                                                  )
+                                                                }
+                                                              ></span>
+                                                            ) : null}
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                    </Draggable>
+                                                  );
+                                                }
+                                              )}
+                                              {provided.placeholder}
+                                            </div>
+                                          )}
+                                        </Droppable>
+                                      </DragDropContext>
                                     )}
                                     <div className="add__question__filed">
                                       {question?.question__type === "3" ||
-                                      question?.question__type === "4" ? (
+                                      question?.question__type === "4" ||
+                                      question?.question__type === "5" ? (
                                         <>
                                           <span>
-                                            <input
-                                              type={
-                                                question?.question__type === "3"
-                                                  ? "radio"
-                                                  : "checkbox"
-                                              }
-                                              name=""
-                                              id=""
-                                              disabled
-                                            />
+                                            {question?.question__type ===
+                                            "5" ? (
+                                              <span className="select__option__no">
+                                                {`${
+                                                  question?.options?.length + 1
+                                                }.`}{" "}
+                                              </span>
+                                            ) : (
+                                              <input
+                                                type={
+                                                  question?.question__type ===
+                                                  "3"
+                                                    ? "radio"
+                                                    : "checkbox"
+                                                }
+                                                name=""
+                                                id=""
+                                                disabled
+                                              />
+                                            )}
                                           </span>
                                           <span
                                             className="add__option"

@@ -127,8 +127,31 @@
 .question__field {
   position: relative;
 }
-.question__filed {
+.drap__option_icon{
+  position: absolute;
+  left: -14px;
+  top: 9px;
+}
+.drap__checkbox__option_icon{
+  position: absolute;
+  left: -14px;
+  top: 0;
+}
+.drap__select__option_icon{
+  position: absolute;
+  left: -14px;
+  top: 0;
+}
+.question__checkbox__field {
   margin-top: 10px;
+  position: relative;
+}
+.question__select__field {
+  margin-top: 10px;
+  position: relative;
+}
+.select__option__no{
+  margin-left: 5px;
 }
 .option__filed,
 .option__checkbox__filed,
@@ -175,6 +198,7 @@
 }
 .remove__icon::before {
   content: url(../public/remove__icon.png);
+  cursor: pointer;
 }
 .coppy__icon::before {
   content: url(../public/coppy__icon.png);

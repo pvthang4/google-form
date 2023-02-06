@@ -1,13 +1,13 @@
 import { FC, Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PieChart from "./PieChart";
-import GoogleForm from "./GoogleForm";
-import BarChart from "./BarChart";
+import BarChart from "./core/components/Chart/BarChart";
+import PieChart from "./core/components/Chart/PieChart";
+import QuestionForm from "./core/components/QuestionForm";
 
 const App: FC = () => {
   return (
     <Fragment>
-      <div style={{ "textAlign": "center" }}>
+      <div style={{ textAlign: "center" }}>
         <button
           onClick={() => (window.location.href = "/google-form")}
           className="button"
@@ -29,7 +29,7 @@ const App: FC = () => {
       </div>
       <BrowserRouter>
         <Routes>
-          <Route path="/google-form" element={<GoogleForm />} />
+          <Route path="/google-form" element={<QuestionForm />} />
           <Route path="/pie-chart" element={<PieChart />} />
           <Route path="/bar-chart" element={<BarChart />} />
         </Routes>

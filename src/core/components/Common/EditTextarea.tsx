@@ -9,6 +9,8 @@ const EditTextarea = ({
   handleOnChangeQuestion,
   addNewOption = () => {},
   setIsFocused,
+  name,
+  handleChange,
 }: any) => {
   const textareaRef: any = useRef(null);
   const [textValue, setTextValue] = useState("");
@@ -60,8 +62,6 @@ const EditTextarea = ({
 
   // Clear entry with Escape Key
   const handleKeyDown = (key: any) => {
-    console.log(target);
-    console.log(key);
     // ESC Key Press to clear out field
     if (key === "Escape") {
       setTextValue("");
@@ -80,15 +80,17 @@ const EditTextarea = ({
       value={textValue}
       placeholder={placeholder}
       onKeyDown={(e: any) => handleKeyDown(e.key)}
-      onChange={(e: any) => setTextValue(e.target.value)}
-      onFocus={(e: any) => setIsFocused(true)}
+      onChange={handleChange}
+      onFocus={() => setIsFocused(true)}
       onBlur={(e: any) => handleOnBlur(e)}
+      name={name}
     />
   );
 };
 
-const FormInputTextarea: any = styled.textarea`
+const FormInputTextarea: any = styled.input`
   resize: none;
+  height: 100% !important;
   font-size: ${(props: any) => {
     switch (props.size) {
       case "large":

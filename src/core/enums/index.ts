@@ -5,3 +5,8 @@ export enum QuestionType {
   CHECK_BOX = "4",
   DROP_DOWN_MENU = "5",
 }
+export enum ChoiceType {
+  RADIO = "RADIO",
+  CHECKBOX = "CHECKBOX",
+  DROP_DOWN = "DROP_DOWN",
+}

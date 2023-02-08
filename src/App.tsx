@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BarChart from "./core/components/Chart/BarChart";
 import PieChart from "./core/components/Chart/PieChart";
-import QuestionForm from "./core/components/QuestionForm";
+import Form from "./core/components/Form";
 
 const App: FC = () => {
   return (
@@ -29,7 +29,7 @@ const App: FC = () => {
       </div>
       <BrowserRouter>
         <Routes>
-          <Route path="/google-form" element={<QuestionForm />} />
+          <Route path="/google-form" element={<Form />} />
           <Route path="/pie-chart" element={<PieChart />} />
           <Route path="/bar-chart" element={<BarChart />} />
         </Routes>

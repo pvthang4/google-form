@@ -1,9 +1,14 @@
-const ShortQuestion = ({ Field, index = 0, handleChange }: any) => {
+const ShortQuestion = ({
+  Field,
+  handleChange,
+  sectionIndex = 0,
+  questionIndex = 0,
+}: any) => {
   return (
     <div className="question__filed">
       <Field
         type="text"
-        name={`questions.${index}.short__question`}
+        name={`sections.${sectionIndex}.questions.${questionIndex}.short__question`}
         className="option__short__filed"
         onChange={handleChange}
       />

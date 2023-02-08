@@ -1,9 +1,14 @@
-const ParagraphQuestion = ({ Field, index = 0, handleChange }: any) => {
+const ParagraphQuestion = ({
+  Field,
+  handleChange,
+  sectionIndex = 0,
+  questionIndex = 0,
+}: any) => {
   return (
     <div className="question__filed">
       <Field
         as="textarea"
-        name={`questions.${index}.paragraph`}
+        name={`sections.${sectionIndex}.questions.${questionIndex}.paragraph`}
         className="option__paragraph__filed"
         onChange={handleChange}
       />

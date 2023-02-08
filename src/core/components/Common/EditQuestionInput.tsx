@@ -8,6 +8,8 @@ const EditQuestionInput = ({
   value,
   handleOnChangeQuestion,
   addNewOption,
+  name,
+  handleChange,
 }: any) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -43,6 +45,8 @@ const EditQuestionInput = ({
         handleOnChangeQuestion={handleOnChange}
         addNewOption={addNewOption}
         setIsFocused={setIsFocused}
+        name={name}
+        handleChange={handleChange}
       />
       <FormInputBottomDefaultShadow target={target} isHovered={isHovered} />
       <FormInputBottomActiveShadow active={isFocused} />

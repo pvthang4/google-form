@@ -19,7 +19,8 @@ import {
 
 const QuestionTypeDropdown = ({
   questionType = QuestionType.MULTIPLE_CHOICE,
-  index = 0,
+  sectionIndex = 0,
+  questionIndex = 0,
   values = {},
   setFieldValue,
 }: any) => {
@@ -62,7 +63,7 @@ const QuestionTypeDropdown = ({
         value: val,
       },
     };
-    handleType(e, index, values, setFieldValue);
+    handleType(e, sectionIndex, questionIndex, values, setFieldValue);
   };
 
   const selectedTypeIcon = (type: any) => {

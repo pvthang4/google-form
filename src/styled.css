@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 .main {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   position: relative;
   max-width: 700px;
@@ -32,7 +32,7 @@
   text-align: center;
 }
 .drag__icon::after {
-  content: url(../../../assets/Icons/drap__icon.png);
+  content: url(./assets/Icons/drap__icon.png);
   display: block;
 }
 .chart__block {
@@ -45,7 +45,7 @@
   padding-right: 10px;
   font-size: 20px;
 }
-.main::before {
+/* .main::before {
   position: absolute;
   content: "";
   height: 192.5px;
@@ -57,7 +57,7 @@
   border: 1px solid #dadce0;
   border-radius: 8px;
   margin-bottom: 12px;
-}
+} */
 .form {
   margin-top: 214.5px;
   width: 100%;
@@ -119,7 +119,7 @@
   position: relative;
 }
 .drap__option__icon {
-  content: url(../../../assets/Icons/drap__icon.png);
+  content: url(./assets/Icons/drap__icon.png);
   /* transform: rotate(90deg); */
   display: block;
   top: 2px;
@@ -152,6 +152,9 @@
 }
 .select__option__no {
   margin-left: 5px;
+}
+.radio__type {
+  outline: none;
 }
 .option__filed,
 .option__checkbox__filed,
@@ -197,15 +200,16 @@
   position: relative;
 }
 .remove__icon::before {
-  content: url(../../../assets/Icons/remove__icon.png);
+  content: url(./assets/Icons/remove__icon.png);
   cursor: pointer;
+  margin-left: 10px;
 }
 .coppy__icon::before {
-  content: url(../../../assets/Icons/coppy__icon.png);
+  content: url(./assets/Icons/coppy__icon.png);
   margin-right: 25px;
 }
 .delete__icon::before {
-  content: url(../../../assets/Icons/delete__icon.png);
+  content: url(./assets/Icons/delete__icon.png);
   margin-right: 25px;
 }
 .question__footer {
@@ -222,6 +226,8 @@
   padding: 10px 20px;
   cursor: pointer;
   border: 1px solid #c4c4c5;
-  margin-top: 10px;
   border-radius: 5px;
+}
+.form {
+  margin-top: 0;
 }

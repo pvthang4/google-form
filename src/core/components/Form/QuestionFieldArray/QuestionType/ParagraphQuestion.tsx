@@ -1,18 +1,17 @@
-const ParagraphQuestion = ({
-  Field,
-  handleChange,
-  sectionIndex = 0,
-  questionIndex = 0,
-}: any) => {
-  return (
-    <div className="question__filed">
-      <Field
-        as="textarea"
-        name={`sections.${sectionIndex}.questions.${questionIndex}.paragraph`}
-        className="option__paragraph__filed"
-        onChange={handleChange}
-      />
-    </div>
-  );
+import styled from "styled-components";
+
+const ParagraphQuestion = () => {
+  return <OptionInput>Long reply text</OptionInput>;
 };
+const OptionInput = styled.p`
+  margin: 16px 0 0 0;
+  padding: 0 0 8px 0;
+  color: #3c3b47;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  border-bottom: 1px dashed #3c3b47;
+  width: 80%;
+`;
+
 export default ParagraphQuestion;

@@ -10,6 +10,11 @@ const EditQuestionInput = ({
   addNewOption,
   name,
   handleChange,
+  fontWeight,
+  padding,
+  height,
+  bgColor,
+  width,
 }: any) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -34,12 +39,17 @@ const EditQuestionInput = ({
   return (
     <FormInputWrapper
       target={target}
+      bgColor={bgColor}
+      width={width}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <EditTextarea
         target={target}
         size={size}
+        fontWeight={fontWeight}
+        padding={padding}
+        height={height}
         value={value}
         placeholder={textareaPlaceholder(target)}
         handleOnChangeQuestion={handleOnChange}
@@ -57,14 +67,17 @@ const EditQuestionInput = ({
 const FormInputWrapper: any = styled.div`
   position: relative;
   & + & {
-    margin-top: 8px;
+    margin-top: 3px;
   }
   border-radius: 4px 4px 0 0;
   margin-left: ${(props: any) => (props.target === "label" ? "10px" : "0")};
   flex: ${(props: any) => (props.target === "title" ? "1" : "")};
-  width: 100%;
-  background-color: ${(props: any) =>
-    props.target === "title" ? "rgb(248,249,250)" : "white"};
+  width: ${(props: any) => {
+    return props.width ? props.width : "100%";
+  }};
+  background-color: ${(props: any) => {
+    return props.bgColor ? props.bgColor : "white";
+  }};
   padding: ${(props: any) => (props.target === "title" ? "16px" : "0")};
 `;
 
@@ -97,7 +110,7 @@ const FormInputBottomActiveShadow: any = styled.div`
   bottom: 0px;
   height: 2px;
   background-color: ${(props: any) =>
-    props.active ? "rgb(219, 68, 55);" : "rgba(0,0,0,0.1)"};
+    props.active ? "#0080C1" : "rgba(0,0,0,0.1)"};
   transform: translateX(-50%);
   left: 50%;
   transition: 0.2s all linear;

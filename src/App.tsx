@@ -3,11 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BarChart from "./core/components/Chart/BarChart";
 import PieChart from "./core/components/Chart/PieChart";
 import Form from "./core/components/Form";
+import "./index.css"
 
 const App: FC = () => {
   return (
     <Fragment>
-      <div style={{ textAlign: "center" }}>
+      {/* <div style={{ textAlign: "center" }}>
         <button
           onClick={() => (window.location.href = "/google-form")}
           className="button"
@@ -26,7 +27,7 @@ const App: FC = () => {
         >
           BarChart
         </button>
-      </div>
+      </div> */}
       <BrowserRouter>
         <Routes>
           <Route path="/google-form" element={<Form />} />

@@ -1,13 +1,15 @@
 import { Formik } from "formik";
 import SectionFieldArray from "./SectionFieldArray";
-import "../../../styled.css";
+import Header from "../Common/Header";
+import styled from "styled-components";
+import { initalFormValue } from "./initalFormValue";
 
 const Form: React.FC = () => {
-  
   return (
-    <div className="main">
+    <MainWrapper>
+      <Header />
       <Formik
-        initialValues={{ sections: [] }}
+        initialValues={initalFormValue}
         onSubmit={() => alert(123)}
         validateOnChange={false}
         validateOnBlur
@@ -15,7 +17,6 @@ const Form: React.FC = () => {
       >
         {({ handleSubmit, values, setFieldValue, handleChange }: any) => {
           console.log("values12312", values);
-          
           return (
             <SectionFieldArray
               values={values}
@@ -25,8 +26,10 @@ const Form: React.FC = () => {
           );
         }}
       </Formik>
-    </div>
+    </MainWrapper>
   );
 };
+
+const MainWrapper = styled.div``;
 
 export default Form;

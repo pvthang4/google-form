@@ -1,10 +1,15 @@
 import { FieldArray } from "formik";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import link from "../../../../../assets/Icons/drap__option_icon.png";
+import styled from "styled-components";
+import iconUpload from "../../../../../assets/Images/Image_upload.svg";
+import iconRemove from "../../../../../assets/Icons/Icon_remove.svg";
 import {
+  getValueFromFormikName,
   handleOnDragOptionEnd,
   handleRemoveOption,
+  handleSortOptions,
 } from "../../../../helpers/question.helper";
+import EditQuestionInput from "../../../Common/EditQuestionInput";
 
 const CheckBoxQuestion = ({
   Field,
@@ -16,6 +21,7 @@ const CheckBoxQuestion = ({
   question = {},
   questionArrayHelpers,
 }: any) => {
+  const optionsSort = handleSortOptions(question?.options);
   return (
     <DragDropContext
       onDragEnd={(result: any) =>
@@ -30,62 +36,71 @@ const CheckBoxQuestion = ({
     >
       <Droppable droppableId="option">
         {(provided) => (
-          <div
-            className="option"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {question?.options?.map((option: any, optionIndex: number) => {
+          <Option {...provided.droppableProps} ref={provided.innerRef}>
+            {optionsSort?.map((option: any, optionIndex: number) => {
+              const optionFormikName: string = `items.${sectionIndex}.questionGroupItem.questions.${questionIndex}.choiceQuestion.options.${optionIndex}.value`;
+              const optionFormikValue =
+                getValueFromFormikName(optionFormikName, values) || "";
               return (
                 <Draggable
-                  key={option?.id}
-                  draggableId={option?.id}
+                  key={option?.optionId}
+                  draggableId={option?.optionId}
                   index={optionIndex}
                 >
                   {(provided) => (
                     <FieldArray
-                      name={`sections.${sectionIndex}.questions.${questionIndex}.options`}
+                      name={`items.${sectionIndex}.questionGroupItem.questions.${questionIndex}.choiceQuestion.options`}
                       render={(optionArrayHelpers) => (
-                        <div
+                        <OptionGroup
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="radio__type"
-                          key={option?.id}
+                          key={option?.optionId}
                         >
-                          <div className="question__group">
-                            <div className="question__checkbox__field">
-                              <img
-                                src={link}
-                                alt=""
-                                className="drap__checkbox__option_icon"
-                              />
-                              <input
-                                disabled
-                                type="checkbox"
-                                name={option?.id}
-                              />
-                              <Field
-                                type="text"
-                                placeholder="Option"
-                                className="option__checkbox__filed"
-                                name={`sections.${sectionIndex}.questions.${questionIndex}.options.${optionIndex}.option`}
-                                onChange={handleChange}
-                              />
-                            </div>
-                            {question?.options?.length > 1 ? (
-                              <span
-                                className="remove__icon"
-                                onClick={() =>
-                                  handleRemoveOption(
-                                    optionArrayHelpers,
-                                    optionIndex
-                                  )
-                                }
-                              ></span>
-                            ) : null}
-                          </div>
-                        </div>
+                          {!option?.isOther ? (
+                            <OptionItem>
+                              <OptionLeftItem>
+                                <CheckboxItem />
+                                <EditQuestionInput
+                                  handleChange={handleChange}
+                                  value={optionFormikValue}
+                                  name={optionFormikName}
+                                  width="85%"
+                                  size="18px"
+                                  fontWeight="400"
+                                  padding="0"
+                                  height="44px"
+                                />
+                              </OptionLeftItem>
+                              <ActionOption>
+                                {option?.option !== "Other" ? (
+                                  <IconUploadFile
+                                    // onClick={() => setIsOpen(true)}
+                                    src={iconUpload}
+                                    alt={""}
+                                    height="36px"
+                                    width="36px"
+                                  />
+                                ) : null}
+
+                                {question?.options?.length > 1 ? (
+                                  <IconRemove
+                                    src={iconRemove}
+                                    alt={""}
+                                    height="25px"
+                                    width="25px"
+                                    onClick={() =>
+                                      handleRemoveOption(
+                                        optionArrayHelpers,
+                                        optionIndex
+                                      )
+                                    }
+                                  />
+                                ) : null}
+                              </ActionOption>
+                            </OptionItem>
+                          ) : null}
+                        </OptionGroup>
                       )}
                     />
                   )}
@@ -93,10 +108,58 @@ const CheckBoxQuestion = ({
               );
             })}
             {provided.placeholder}
-          </div>
+          </Option>
         )}
       </Droppable>
     </DragDropContext>
   );
 };
+
+const Option = styled.div``;
+
+const OptionGroup = styled.div`
+  position: relative;
+  outline: none;
+  margin-top: 20px;
+  // &:first-child {
+
+  // }
+`;
+
+const OptionItem = styled.div`
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+`;
+
+const OptionLeftItem = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const CheckboxItem = styled.div`
+  width: 36px;
+  height: 36px;
+  margin-right: 19px;
+  border: 3px solid #807e93;
+`;
+
+const ActionOption = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+const IconUploadFile = styled.img`
+  margin-right: 55px;
+  margin-top: 7px;
+  cursor: pointer;
+`;
+
+const IconRemove = styled.img`
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
+
 export default CheckBoxQuestion;

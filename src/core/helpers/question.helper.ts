@@ -1,57 +1,300 @@
 import __uniqueId from "lodash/uniqueId";
+import { ChoiceType } from "../enums";
 
 //handle add section
 export const handleAddSection = (values: any, arrayHelpers: any) => {
-  arrayHelpers.insert(values.sections.length, {
-    id: __uniqueId("section-"),
-    title__section: "",
-    description__section: "",
-    questions: [],
+  arrayHelpers.insert(values?.items?.length, {
+    itemId: __uniqueId("sectionId-"),
+    title: "title section",
+    description: "description section",
+    questionItem: {
+      question: {
+        questionId: __uniqueId("questionId-"),
+        required: "boolean",
+        choiceQuestion: {
+          type: ChoiceType.RADIO,
+          options: [
+            {
+              optionId: __uniqueId("optionId-"),
+              value: "string",
+              image: {
+                contentUri: "string",
+                altText: "string",
+                properties: {
+                  alignment: "enum (Alignment)",
+                  width: "integer",
+                },
+                sourceUri: "string",
+              },
+              isOther: "boolean",
+              goToAction: "enum (GoToAction)",
+              goToSectionId: "string",
+            },
+          ],
+          shuffle: "boolean",
+        },
+        textQuestion: {
+          // if false, the question is a short text question
+          paragraph: "boolean",
+        },
+        grading: {
+          pointValue: "integer",
+          correctAnswers: {
+            answers: [
+              {
+                value: "string",
+              },
+            ],
+          },
+          whenRight: {},
+          whenWrong: {},
+          generalFeedback: {},
+        },
+        scaleQuestion: {
+          low: "integer",
+          high: "integer",
+          lowLabel: "string",
+          highLabel: "string",
+        },
+        dateQuestion: {
+          includeTime: "boolean",
+          includeYear: "boolean",
+        },
+        timeQuestion: {
+          duration: "boolean",
+        },
+        fileUploadQuestion: {
+          folderId: "string",
+          types: [],
+          maxFiles: "integer",
+          maxFileSize: "string",
+        },
+        rowQuestion: {
+          pointValue: "integer",
+          correctAnswers: {},
+          whenRight: {},
+          whenWrong: {},
+          generalFeedback: {},
+        },
+      },
+      image: {
+        contentUri: "string",
+        altText: "string",
+        properties: {
+          alignment: "enum (Alignment)",
+          width: "integer",
+        },
+        sourceUri: "string",
+      },
+    },
+    // questions
+    questionGroupItem: {
+      questions: [
+        {
+          questionId: __uniqueId("questionId-"),
+          // temp
+          title: "title question",
+          required: false,
+          choiceQuestion: {
+            type: ChoiceType.RADIO,
+            options: [
+              {
+                optionId: __uniqueId("optionId-"),
+                value: "Option 1",
+                image: {
+                  contentUri: "",
+                  altText: "",
+                  properties: {
+                    alignment: "",
+                    width: "",
+                  },
+                  sourceUri: "",
+                },
+                isOther: false,
+                goToAction: "",
+                goToSectionId: "",
+              },
+            ],
+            shuffle: false,
+          },
+          textQuestion: {
+            // if false, the question is a short text question
+            paragraph: true,
+          },
+          grading: {
+            pointValue: "",
+            correctAnswers: {
+              answers: [
+                {
+                  value: "",
+                },
+              ],
+            },
+            whenRight: {},
+            whenWrong: {},
+            generalFeedback: {},
+          },
+          scaleQuestion: {
+            low: "",
+            high: "",
+            lowLabel: "",
+            highLabel: "",
+          },
+          dateQuestion: {
+            includeTime: false,
+            includeYear: false,
+          },
+          timeQuestion: {
+            duration: false,
+          },
+          fileUploadQuestion: {
+            folderId: "",
+            types: [],
+            maxFiles: "",
+            maxFileSize: false,
+          },
+          rowQuestion: {
+            pointValue: "",
+            correctAnswers: {},
+            whenRight: {},
+            whenWrong: {},
+            generalFeedback: {},
+          },
+        },
+      ],
+      image: {
+        contentUri: "",
+        altText: "",
+        properties: {
+          alignment: "",
+          width: "",
+        },
+        sourceUri: "",
+      },
+      grid: {
+        columns: {
+          type: "",
+          options: [{}],
+          shuffle: false,
+        },
+        shuffleQuestions: false,
+      },
+    },
+    pageBreakItem: {},
+    textItem: {},
+    imageItem: {},
+    videoItem: {},
   });
 };
 
 // handle add question
 export const handleAddQuestion = (section: any, arrayHelpers: any) => {
-  arrayHelpers.insert(section.questions.length, {
-    id: __uniqueId("question-"),
-    question__title: "",
-    question__type: "3",
-    options: [
-      {
-        id: __uniqueId("option-"),
-        option: "",
+  arrayHelpers.insert(section?.questionGroupItem?.questions.length, {
+    questionId: __uniqueId("questionId-"),
+    // temp
+    title: "title question",
+    required: false,
+    choiceQuestion: {
+      type: ChoiceType.RADIO,
+      options: [
+        {
+          optionId: __uniqueId("optionId-"),
+          value: "Option 1",
+          image: {
+            contentUri: "",
+            altText: "",
+            properties: {
+              alignment: "",
+              width: "",
+            },
+            sourceUri: "",
+          },
+          isOther: false,
+          goToAction: "",
+          goToSectionId: "",
+        },
+      ],
+      shuffle: false,
+    },
+    textQuestion: {
+      paragraph: true,
+    },
+    grading: {
+      pointValue: "",
+      correctAnswers: {
+        answers: [
+          {
+            value: "",
+          },
+        ],
       },
-    ],
-    short__question: "",
-    paragraph: "",
-    isRequired: false,
+      whenRight: {},
+      whenWrong: {},
+      generalFeedback: {},
+    },
+    scaleQuestion: {
+      low: "",
+      high: "",
+      lowLabel: "",
+      highLabel: "",
+    },
+    dateQuestion: {
+      includeTime: false,
+      includeYear: false,
+    },
+    timeQuestion: {
+      duration: false,
+    },
+    fileUploadQuestion: {
+      folderId: "",
+      types: [],
+      maxFiles: "",
+      maxFileSize: "",
+    },
+    rowQuestion: {
+      pointValue: "",
+      correctAnswers: {},
+      whenRight: {},
+      whenWrong: {},
+      generalFeedback: {},
+    },
   });
 };
 
 // handle change question type
 export const handleType = (
   e: any,
-  sectionIndex: number,
   questionIndex: number,
   values: any,
-  setFieldValue: any
+  setFieldValue: any,
+  questionArrayHelpers: any
 ) => {
-  const newData = [
-    ...values.sections.slice(0, sectionIndex),
-    {
-      ...values.sections[sectionIndex],
-      questions: [
-        ...values.sections[sectionIndex].questions.slice(0, questionIndex),
-        {
-          ...values.sections[sectionIndex].questions[questionIndex],
-          question__type: e.target.value,
-        },
-        ...values.sections[sectionIndex].questions.slice(questionIndex + 1),
-      ],
+  const questionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}`;
+  const questionstionFormikValue = getValueFromFormikName(
+    questionsFormikName,
+    values
+  );
+  const choiceQuestionFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.choiceQuestion`;
+  const choiceQuestionFormikValue = getValueFromFormikName(
+    choiceQuestionFormikName,
+    values
+  );
+  const newData = {
+    ...questionstionFormikValue,
+    choiceQuestion: {
+      ...choiceQuestionFormikValue,
+      type: e.target.value,
     },
-    ...values.sections.slice(sectionIndex + 1),
-  ];
-  setFieldValue("sections", newData);
+    textQuestion: {
+      paragraph:
+        e.target.value === ChoiceType.SHORT_ANSWER
+          ? true
+          : ChoiceType.PARAGRAPH
+          ? false
+          : null,
+    },
+  };
+  setFieldValue(questionsFormikName, newData);
 };
 
 // handle add option for question
@@ -61,15 +304,32 @@ export const handleAddOption = (
   setFieldValue: any,
   questionArrayHelpers: any
 ) => {
-  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.options`;
+  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.choiceQuestion.options`;
+
   const optionsFormikValue =
     getValueFromFormikName(optionsFormikName, values) || [];
+
+  const optionsNoOther = optionsFormikValue?.filter(
+    (item: any) => item?.isOther === false
+  );
 
   const newData = [
     ...optionsFormikValue,
     {
-      id: __uniqueId("option-"),
-      option: "",
+      optionId: __uniqueId("optionId-"),
+      value: `Option ${optionsNoOther?.length + 1}`,
+      image: {
+        contentUri: "",
+        altText: "",
+        properties: {
+          alignment: "",
+          width: "",
+        },
+        sourceUri: "",
+      },
+      isOther: false,
+      goToAction: "",
+      goToSectionId: "",
     },
   ];
   setFieldValue(optionsFormikName, newData);
@@ -82,15 +342,27 @@ export const handleAddOtherOption = (
   setFieldValue: any,
   questionArrayHelpers: any
 ) => {
-  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.options`;
+  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.choiceQuestion.options`;
   const optionsFormikValue =
     getValueFromFormikName(optionsFormikName, values) || [];
 
   const newData = [
     ...optionsFormikValue,
     {
-      id: __uniqueId("option-"),
-      option: "Other",
+      optionId: __uniqueId("optionId-"),
+      value: "Other...",
+      image: {
+        contentUri: "",
+        altText: "",
+        properties: {
+          alignment: "",
+          width: "",
+        },
+        sourceUri: "",
+      },
+      isOther: true,
+      goToAction: "",
+      goToSectionId: "",
     },
   ];
   setFieldValue(optionsFormikName, newData);
@@ -104,6 +376,32 @@ export const handleRemoveOption = (
   optionArrayHelpers.remove(optionIndex);
 };
 
+// handle remove other option of question
+export const handleRemoveOtherOption = (
+  questionIndex: number,
+  values: any,
+  setFieldValue: any,
+  questionArrayHelpers: any
+) => {
+  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.choiceQuestion.options`;
+  const optionsFormikValue =
+    getValueFromFormikName(optionsFormikName, values) || [];
+
+  const newData = optionsFormikValue?.filter(
+    (item: any) => item?.isOther === false
+  );
+  setFieldValue(optionsFormikName, newData);
+};
+
+// handle swap question
+export const handleSwapQuestion = (
+  questions: any[],
+  questionArrayHelpers: any,
+  questionIndex: number
+) => {
+  if (questions?.length === 1) return;
+  questionArrayHelpers.swap(questionIndex, questionIndex + 1);
+};
 // handle coppy question
 export const handleCoppyQuestion = (
   question: any,
@@ -112,7 +410,7 @@ export const handleCoppyQuestion = (
 ) => {
   const newQuestion: any = {
     ...question,
-    id: __uniqueId("question-"),
+    questionId: __uniqueId("questionId-"),
   };
   questionArrayHelpers.insert(questionIndex + 1, newQuestion);
 };
@@ -160,7 +458,7 @@ export const handleOnDragOptionEnd = (
 ) => {
   if (!result.destination) return;
   // get field name of options, get value with field name
-  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.options`;
+  const optionsFormikName: string = `${questionArrayHelpers.name}.${questionIndex}.choiceQuestion.options`;
 
   const optionsFormikValue =
     getValueFromFormikName(optionsFormikName, values) || [];
@@ -182,4 +480,9 @@ export const getValueFromFormikName = (path: string, obj?: any) => {
     return previous ? previous[current] : null;
     // eslint-disable-next-line no-restricted-globals
   }, obj || self);
+};
+
+// handle sort isOther from flase to true
+export const handleSortOptions = (options: any) => {
+  return options?.sort((a: any, b: any) => a.isOther - b.isOther);
 };

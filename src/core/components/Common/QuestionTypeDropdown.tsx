@@ -1,13 +1,16 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   MdShortText,
   MdSubject,
   MdRadioButtonChecked,
   MdCheckBox,
-  MdArrowDropDown,
   MdArrowDropDownCircle,
 } from "react-icons/md";
-import { QuestionType } from "../../enums";
+import {
+  QUESTION_TYPE_LIST,
+  QUESTION_TYPE_LIST_INIT,
+} from "../../constants/data";
+import { ChoiceType } from "../../enums";
 import { handleType } from "../../helpers/question.helper";
 import {
   DropdownList,
@@ -15,47 +18,30 @@ import {
   DropdownListItem,
   DropdownListItemContent,
   DropdownWrapper,
+  MdArrowDropDownStyle,
 } from "./styled";
 
 const QuestionTypeDropdown = ({
-  questionType = QuestionType.MULTIPLE_CHOICE,
-  sectionIndex = 0,
+  questionType = ChoiceType.RADIO,
   questionIndex = 0,
   values = {},
   setFieldValue,
+  questionArrayHelpers,
 }: any) => {
+  const refDropdown: any = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [typeActive, setTypeActive] = useState<string>(questionType);
 
-  const questionTypeList = [
-    {
-      type: QuestionType.SHORT_ANSWER,
-      label: "Short answer",
-    },
-    {
-      type: QuestionType.PARAGRAPH,
-      label: "Long answer",
-    },
-    {
-      type: QuestionType.MULTIPLE_CHOICE,
-      label: "Multiple Choice",
-    },
-    {
-      type: QuestionType.CHECK_BOX,
-      label: "Checkbox",
-    },
-    {
-      type: QuestionType.DROP_DOWN_MENU,
-      label: "Select",
-    },
-  ];
-
-  const getTypeLabel = (type: any) => {
-    const filtered = questionTypeList.filter((item) => item.type === type);
-    return filtered[0]?.label;
-  };
+  const [questionTypeList, setQuestionTypeList] = useState<any>(
+    QUESTION_TYPE_LIST_INIT
+  );
 
   const handleOnClickItem = (val: any) => {
+    const newQuestionTypeList = QUESTION_TYPE_LIST.filter(
+      (item: any) => item.type !== val
+    );
+    setQuestionTypeList(newQuestionTypeList);
+
     setIsDropdownOpen(false);
     setTypeActive(val);
     const e = {
@@ -63,28 +49,52 @@ const QuestionTypeDropdown = ({
         value: val,
       },
     };
-    handleType(e, sectionIndex, questionIndex, values, setFieldValue);
+    handleType(e, questionIndex, values, setFieldValue, questionArrayHelpers);
+  };
+
+  const getTypeLabel = (type: any) => {
+    const questionFilter = QUESTION_TYPE_LIST?.filter(
+      (item: any) => item.type === type
+    );
+
+    return questionFilter[0]?.label;
   };
 
   const selectedTypeIcon = (type: any) => {
     switch (type) {
-      case QuestionType.SHORT_ANSWER:
-        return <MdShortText size="1.7em" />;
-      case QuestionType.PARAGRAPH:
-        return <MdSubject size="1.7em" />;
-      case QuestionType.MULTIPLE_CHOICE:
-        return <MdRadioButtonChecked size="1.7em" />;
-      case QuestionType.CHECK_BOX:
-        return <MdCheckBox size="1.7em" />;
-      case QuestionType.DROP_DOWN_MENU:
-        return <MdArrowDropDownCircle size="1.7em" />;
+      case ChoiceType.SHORT_ANSWER:
+        return <MdShortText size="29px" />;
+      case ChoiceType.PARAGRAPH:
+        return <MdSubject size="29px" />;
+      case ChoiceType.RADIO:
+        return <MdRadioButtonChecked size="29px" />;
+      case ChoiceType.CHECKBOX:
+        return <MdCheckBox size="29px" />;
+      case ChoiceType.DROP_DOWN:
+        return <MdArrowDropDownCircle size="29px" />;
       default:
         return;
     }
   };
 
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        isDropdownOpen &&
+        refDropdown?.current &&
+        !refDropdown?.current.contains(e?.target)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
-    <DropdownWrapper>
+    <DropdownWrapper ref={refDropdown}>
       {/* Selected Question Type */}
       <DropdownListItem
         onClick={() => {
@@ -95,13 +105,13 @@ const QuestionTypeDropdown = ({
           {selectedTypeIcon(typeActive)}
           <span>{getTypeLabel(typeActive)}</span>
         </DropdownListItemContent>
-        <MdArrowDropDown size="1.7em" />
+        <MdArrowDropDownStyle size="29px" />
       </DropdownListItem>
 
       {/* Question Type Dropdown List */}
       {isDropdownOpen && (
         <DropdownList>
-          {questionTypeList?.map(({ type, label }, index: number) => {
+          {questionTypeList?.map(({ type, label }: any, index: number) => {
             if (index === 2) {
               return (
                 <Fragment key={index}>

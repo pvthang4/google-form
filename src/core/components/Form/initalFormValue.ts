@@ -1,4 +1,5 @@
 import __uniqueId from "lodash/uniqueId";
+import { ChoiceType } from "../../enums";
 
 export const initalFormValue = {
   formId: __uniqueId("formId-"),
@@ -18,13 +19,12 @@ export const initalFormValue = {
       itemId: __uniqueId("sectionId-"),
       title: "title section",
       description: "description section",
-      // questions
       questionItem: {
         question: {
           questionId: __uniqueId("questionId-"),
-          required: "boolean",
+          required: false,
           choiceQuestion: {
-            type: "enum (ChoiceType)",
+            type: ChoiceType.RADIO,
             options: [
               {
                 optionId: __uniqueId("optionId-"),
@@ -38,16 +38,16 @@ export const initalFormValue = {
                   },
                   sourceUri: "string",
                 },
-                isOther: "boolean",
+                isOther: false,
                 goToAction: "enum (GoToAction)",
                 goToSectionId: "string",
               },
             ],
-            shuffle: "boolean",
+            shuffle: false,
           },
           textQuestion: {
             // if false, the question is a short text question
-            paragraph: "boolean",
+            paragraph: false,
           },
           grading: {
             pointValue: "integer",
@@ -99,11 +99,40 @@ export const initalFormValue = {
           sourceUri: "string",
         },
       },
+      // questions
       questionGroupItem: {
         questions: [
           {
-            questionId: "string",
-            required: "boolean",
+            questionId: __uniqueId("questionId-"),
+            // temp
+            title: "title question",
+            required: false,
+            choiceQuestion: {
+              type: ChoiceType.RADIO,
+              options: [
+                {
+                  optionId: __uniqueId("optionId-"),
+                  value: "Option 1",
+                  image: {
+                    contentUri: "",
+                    altText: "",
+                    properties: {
+                      alignment: "",
+                      width: "",
+                    },
+                    sourceUri: "",
+                  },
+                  isOther: false,
+                  goToAction: "",
+                  goToSectionId: "",
+                },
+              ],
+              shuffle: false,
+            },
+            textQuestion: {
+              // if false, the question is a short text question
+              paragraph: true,
+            },
             grading: {
               pointValue: "integer",
               correctAnswers: {
@@ -116,30 +145,6 @@ export const initalFormValue = {
               whenRight: {},
               whenWrong: {},
               generalFeedback: {},
-            },
-            choiceQuestion: {
-              type: " enum (ChoiceType)",
-              options: [
-                {
-                  value: "string",
-                  image: {
-                    contentUri: "string",
-                    altText: "string",
-                    properties: {
-                      alignment: "enum (Alignment)",
-                      width: "integer",
-                    },
-                    sourceUri: "string",
-                  },
-                  isOther: "boolean",
-                  goToAction: "enum (GoToAction)",
-                  goToSectionId: "string",
-                },
-              ],
-              shuffle: "boolean",
-            },
-            textQuestion: {
-              paragraph: "boolean",
             },
             scaleQuestion: {
               low: "integer",
@@ -169,8 +174,23 @@ export const initalFormValue = {
             },
           },
         ],
-        image: {},
-        grid: {},
+        image: {
+          contentUri: "string",
+          altText: "string",
+          properties: {
+            alignment: "enum (Alignment)",
+            width: "integer",
+          },
+          sourceUri: "string",
+        },
+        grid: {
+          columns: {
+            type: "enum (ChoiceType)",
+            options: [{}],
+            shuffle: "boolean",
+          },
+          shuffleQuestions: "boolean",
+        },
       },
       pageBreakItem: {},
       textItem: {},

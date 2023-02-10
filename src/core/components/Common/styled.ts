@@ -1,16 +1,19 @@
+import { MdArrowDropDown } from "react-icons/md";
 import styled from "styled-components";
 
 const DropdownWrapper = styled.div`
+  display: flex;
   height: 47px;
   padding: 8px;
-  border: 1px solid #dadce0;
-  margin-left: 35px;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.2px;
   line-height: 32px;
-  color: #202124;
-  width: 180px;
+  color: #807e93;
+  background-color: #ffffff;
+  width: 232px;
+  border: 1px solid #807e93;
+  border-radius: 3px;
   position: relative;
   @media (max-width: 425px) {
     margin-left: 0;
@@ -61,8 +64,16 @@ const DropdownListItemContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
   & > span {
     margin-left: 10px;
+  }
+  &:after {
+    position: absolute;
+    content: "";
+    width: 200px;
+    height: 45px;
+    background: transparent;
   }
 `;
 
@@ -76,14 +87,19 @@ const DropdownListHorizontalLine = styled.div`
 const LabelStyled = styled.label`
   position: relative;
   display: inline-block;
-  width: 50px;
+  width: 32px;
   height: 24px;
-  margin: 0 16px 0 12px;
-  padding: 3px 3px 3px 8.5px;
 `;
+
 const InputStyled = styled.input`
   display: none;
 `;
+
+const MdArrowDropDownStyle = styled(MdArrowDropDown)`
+  position: absolute;
+  right: 0;
+`;
+
 const SliderStyled = styled.div`
   position: absolute;
   cursor: pointer;
@@ -91,32 +107,37 @@ const SliderStyled = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #dddddd;
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 34px;
+  width: 32px;
+  height: 12px;
+  background: #d9d9d9;
+  border-radius: 16px;
   &:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 2px 2px 0.5px rgba(0, 0, 0, 0.25);
+    left: -3px;
+    bottom: -4px;
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
   }
   ${InputStyled}:focus+& {
-    box-shadow: 0 0 1px #efb850;
+    box-shadow: 0 0 1px #0080c1;
   }
   ${InputStyled}:checked+&:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
   }
   ${InputStyled}:checked+& {
-    background-color: #efb850;
+    background-color: #0080c1;
   }
 `;
 
@@ -129,4 +150,5 @@ export {
   LabelStyled,
   InputStyled,
   SliderStyled,
+  MdArrowDropDownStyle,
 };

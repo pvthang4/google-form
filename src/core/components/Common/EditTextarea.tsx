@@ -4,6 +4,9 @@ import styled from "styled-components";
 const EditTextarea = ({
   target,
   size,
+  fontWeight,
+  padding,
+  height,
   value,
   placeholder,
   handleOnChangeQuestion,
@@ -19,24 +22,9 @@ const EditTextarea = ({
     setTextValue(value);
   }, [value]);
 
-  const textareaHeight = (size: any) => {
-    switch (size) {
-      case "large":
-        return "50px";
-      case "medium":
-        return "21px";
-      case "small":
-        return "12px";
-      case "extrasmall":
-        return "10px";
-      default:
-        return "12px";
-    }
-  };
-
   useEffect(() => {
     if (textareaRef) {
-      textareaRef.current.style.height = textareaHeight(size);
+      textareaRef.current.style.height = size;
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [textValue, size]);
@@ -77,6 +65,9 @@ const EditTextarea = ({
     <FormInputTextarea
       ref={textareaRef}
       size={size}
+      fontWeight={fontWeight}
+      padding={padding}
+      height={height}
       value={textValue}
       placeholder={placeholder}
       onKeyDown={(e: any) => handleKeyDown(e.key)}
@@ -84,34 +75,28 @@ const EditTextarea = ({
       onFocus={() => setIsFocused(true)}
       onBlur={(e: any) => handleOnBlur(e)}
       name={name}
+      disabled={textValue === "Other..."}
     />
   );
 };
 
 const FormInputTextarea: any = styled.input`
   resize: none;
-  height: 100% !important;
-  font-size: ${(props: any) => {
-    switch (props.size) {
-      case "large":
-        return "32px";
-      case "medium":
-        return "16px";
-      case "small":
-        return "14px";
-      default:
-        return "12px";
-    }
-  }};
+  height: ${(props: any) => {
+    return props.height;
+  }} !important;
+  font-size: ${(props: any) => props.size};
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
+  font-weight: ${(props: any) => {
+    return props.fontWeight;
+  }};
   line-height: 48px;
   display: flex;
   align-items: center;
-  color: #3c3b47;
-  font-weight: 400;
+  color: ${(props: any) => {
+    return props.value === "Other..." ? "#70757a" : "#3c3b47";
+  }};
   letter-spacing: 0.2px;
   width: 100%;
   box-sizing: border-box;
@@ -122,6 +107,9 @@ const FormInputTextarea: any = styled.input`
   overflow-x: hidden;
   background-color: transparent;
   outline: none;
+  padding: ${(props: any) => {
+    return props.padding;
+  }};
 `;
 
 export default EditTextarea;
